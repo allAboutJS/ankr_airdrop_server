@@ -50,9 +50,7 @@ export default class TelegramBotController {
 
 		if (command.startsWith("/start")) {
 			const userExists = await UserController.userExists({ id });
-			const containsReferralCode = /^\/start\s[a-zA-Z0-9]{10}$/.test(
-				command,
-			);
+			const containsReferralCode = /^\/start\s[a-zA-Z0-9]{10}$/.test(command);
 
 			if (!userExists) {
 				await UserController.createAccount({
@@ -60,9 +58,7 @@ export default class TelegramBotController {
 					username,
 					lastName: last_name,
 					firstName: first_name,
-					referredBy: containsReferralCode
-						? command.split(" ")[1]
-						: undefined,
+					referredBy: containsReferralCode ? command.split(" ")[1] : undefined,
 				});
 
 				containsReferralCode &&
@@ -82,7 +78,7 @@ export default class TelegramBotController {
 
 			await TelegramBotController.#sendMessage(
 				id,
-				`👋 Hello ${first_name || 'friend'}, welcome to the Ankr Airdrop Bot! \nIt's great to have you on board! 🎉\n\nClick on the 'Sign in' button to continue!`,
+				`👋 Hello ${first_name || "friend"}, welcome to the Ankr Airdrop Bot! \nIt's great to have you on board! 🎉\n\nOpen the app to continue!`,
 			);
 		}
 	}
