@@ -10,26 +10,6 @@ import { config } from "dotenv";
 
 config();
 
-const allowedOrigins = [
-	"https://web.telegram.org",
-	"https://ankr-airdrop.netlify.app",
-];
-
-process.env.NODE_ENV === "development" &&
-	allowedOrigins.push("http://localhost:5173");
-
-const corsOptions = {
-	origin: function (origin, callback) {
-		if (allowedOrigins.includes(origin) || !origin) {
-			callback(null, true);
-		} else {
-			callback(new Error("Not allowed by CORS"));
-		}
-	},
-	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	optionsSuccessStatus: 204,
-};
-
 const app = express();
 const port = parseInt(process.env.PORT || "3000");
 const userRouter = Router();
@@ -38,7 +18,7 @@ const adminRouter = Router();
 app.disable("x-powered-by");
 app.disable("x-server");
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(helmet());
 app.use(cors({}));
 app.use(express.urlencoded({ extended: true }));
